@@ -11,8 +11,7 @@ export default function AboutSection() {
           <div>
             <h2 className="text-4xl font-bold text-primary mb-4">Sobre Mim</h2>
             <p className="text-lg text-foreground/80 leading-relaxed">
-              Sou um desenvolvedor web apaixonado por criar experiências digitais incríveis. Com mais de 5 anos de
-              experiência em desenvolvimento full-stack, especializo-me em React, Next.js e tecnologias modernas.
+              Sou desenvolvedora web apaixonada por criar experiências digitais incríveis. Com 1 ano de experiência em desenvolvimento web como estagiária, especializo-me em React, Next.js e tecnologias modernas.
             </p>
           </div>
 
@@ -22,10 +21,6 @@ export default function AboutSection() {
               <li className="flex items-center gap-2">
                 <span className="w-2 h-2 bg-secondary rounded-full"></span>
                 Desenvolvimento Frontend (React, Next.js, Tailwind CSS)
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-secondary rounded-full"></span>
-                Desenvolvimento Backend (Node.js, Express, PostgreSQL)
               </li>
               <li className="flex items-center gap-2">
                 <span className="w-2 h-2 bg-secondary rounded-full"></span>
@@ -55,7 +50,7 @@ export default function AboutSection() {
             <h3 className="text-lg font-semibold text-primary mb-3">Conecte-se</h3>
             <div className="flex gap-4">
               <a
-                href="https://github.com"
+                href="https://github.com/Catyz00"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-foreground hover:text-primary transition"
@@ -63,20 +58,12 @@ export default function AboutSection() {
                 GitHub
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/catarina-dalsan/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-foreground hover:text-primary transition"
               >
                 LinkedIn
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-foreground hover:text-primary transition"
-              >
-                Twitter
               </a>
             </div>
           </div>
@@ -86,16 +73,7 @@ export default function AboutSection() {
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div className="rounded-lg overflow-hidden bg-muted aspect-square">
-              <img src="/professional-portrait-developer.png" alt="Profissional" className="w-full h-full object-cover" />
-            </div>
-            <div className="rounded-lg overflow-hidden bg-muted aspect-square">
-              <img src="/developer-workspace-coding.jpg" alt="Workspace" className="w-full h-full object-cover" />
-            </div>
-            <div className="rounded-lg overflow-hidden bg-muted aspect-square">
-              <img src="/team-collaboration.png" alt="Colaboração" className="w-full h-full object-cover" />
-            </div>
-            <div className="rounded-lg overflow-hidden bg-muted aspect-square">
-              <img src="/design-and-development.jpg" alt="Design" className="w-full h-full object-cover" />
+              <img src="/perfil.jpeg" alt="Profissional" className="w-full h-full object-cover" />
             </div>
           </div>
         </div>

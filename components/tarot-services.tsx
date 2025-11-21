@@ -10,9 +10,8 @@ export default function TarotServices() {
     {
       id: "single",
       name: "Consulta Única",
-      price: "R$ 50",
-      duration: "15 minutos",
-      description: "Leitura rápida com 3 cartas",
+      price: "R$ 5",
+      description: "Sessão com 1 pergunta",
       features: [
         "Leitura de 3 cartas",
         "Interpretação detalhada",
@@ -23,36 +22,48 @@ export default function TarotServices() {
     {
       id: "full",
       name: "Consulta Completa",
-      price: "R$ 100",
-      duration: "30 minutos",
-      description: "Leitura profunda e contextualizada",
+      price: "R$ 15",
+      description: "Sessão com 3 perguntas",
       features: [
-        "Leitura de 7 cartas",
+        "Leitura de 5 cartas",
         "Análise profunda",
         "Múltiplas perspectivas",
         "Recomendações personalizadas",
         "Relatório detalhado",
       ],
-      popular: true,
     },
     {
       id: "premium",
       name: "Consultoria Premium",
-      price: "R$ 200",
-      duration: "60 minutos",
-      description: "Sessão completa com acompanhamento",
+      price: "R$ 25",
+      description: "Sessão com 5 perguntas",
       features: [
-        "Leitura extensa",
+        "Leitura com 5 cartas",
         "Análise aprofundada",
         "Múltiplos métodos de leitura",
         "Dúvidas ilimitadas",
         "Plano de ação personalizado",
         "Acompanhamento por 30 dias",
       ],
+      popular: true,
     },
   ]
 
   const selectedPkg = packages.find((p) => p.id === selectedPackage)
+
+  // Número de WhatsApp usado no formulário de contato
+  const WHATSAPP_NUMBER = "5511994505049"
+
+  const getWhatsAppUrl = (pkg: { name: string; price: string }) => {
+    const text = `Olá! Gostaria de agendar a ${pkg.name} (${pkg.price}).`
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`
+  }
+
+  const handleSchedule = () => {
+    if (!selectedPkg) return
+    const url = getWhatsAppUrl(selectedPkg as { name: string; price: string })
+    window.open(url, "_blank")
+  }
 
   return (
     <div className="space-y-12">
@@ -100,10 +111,6 @@ export default function TarotServices() {
               {/* Price */}
               <div>
                 <div className="text-4xl font-bold text-primary mb-1">{pkg.price}</div>
-                <p className="text-sm text-muted-foreground flex items-center gap-2">
-                  <Clock size={16} />
-                  {pkg.duration}
-                </p>
               </div>
 
               {/* Features */}
@@ -126,14 +133,7 @@ export default function TarotServices() {
       <div className="text-center mt-6">
         <button
           disabled={!selectedPackage}
-          onClick={() => {
-            const pkg = packages.find((p) => p.id === selectedPackage)
-            if (pkg) {
-              // Aqui você pode abrir modal, redirecionar para checkout, abrir formulário, etc.
-              // Por enquanto mostra um alerta simples.
-              alert(`Agendando: ${pkg.name} — ${pkg.price}`)
-            }
-          }}
+          onClick={handleSchedule}
           className={`mx-auto px-6 py-3 rounded-lg font-semibold transition ${
             selectedPackage
               ? 'bg-green-500 text-white hover:opacity-90'

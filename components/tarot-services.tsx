@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Star, Clock } from "lucide-react"
+import { Star, Clock, CheckCircle2 } from "lucide-react"
 
 export default function TarotServices() {
   const [selectedPackage, setSelectedPackage] = useState<string | null>(null)
@@ -68,11 +68,20 @@ export default function TarotServices() {
         {packages.map((pkg) => (
           <div
             key={pkg.id}
-            className={`rounded-lg border transition cursor-pointer transform hover:scale-105 ${
+            className={`rounded-lg border transition cursor-pointer transform hover:scale-105 relative ${
               pkg.popular ? "border-secondary bg-card shadow-lg" : "border-border bg-card hover:border-primary"
-            } ${selectedPackage === pkg.id ? "ring-2 ring-primary" : ""}`}
+            } ${selectedPackage === pkg.id ? "ring-2 ring-green-500" : ""}`}
             onClick={() => setSelectedPackage(pkg.id)}
           >
+            {/* Indicador de Seleção */}
+            {selectedPackage === pkg.id && (
+              <div className="absolute -top-3 -right-3 z-10">
+                <div className="bg-green-500 rounded-full p-1 shadow-lg">
+                  <CheckCircle2 size={28} className="text-white" strokeWidth={2.5} />
+                </div>
+              </div>
+            )}
+
             {pkg.popular && (
               <div className="bg-secondary text-secondary-foreground px-4 py-2 text-center font-semibold text-sm">
                 Mais Popular

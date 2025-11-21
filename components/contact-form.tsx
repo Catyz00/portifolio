@@ -29,7 +29,7 @@ export default function ContactForm() {
     }, 3000)
   }
 
-  const whatsappLink = `https://wa.me/5511999999999?text=Olá! Gostaria de conversar sobre um projeto.`
+  const whatsappLink = `https://wa.me/5511994505049?text=Olá! Gostaria de conversar sobre um projeto.`
 
   return (
     <div className="grid md:grid-cols-3 gap-8">
@@ -40,8 +40,8 @@ export default function ContactForm() {
             <Mail className="text-primary mt-1 flex-shrink-0" size={24} />
             <div>
               <h4 className="font-semibold text-foreground mb-1">Email</h4>
-              <a href="mailto:seu@email.com" className="text-primary hover:underline">
-                seu@email.com
+              <a href="mailto:catarina.dalsan@outlook.com" className="text-primary hover:underline">
+                catarina.dalsan@outlook.com
               </a>
             </div>
           </div>

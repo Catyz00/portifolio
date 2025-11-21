@@ -52,6 +52,8 @@ export default function TarotServices() {
     },
   ]
 
+  const selectedPkg = packages.find((p) => p.id === selectedPackage)
+
   return (
     <div className="space-y-12">
       {/* Hero Section */}
@@ -114,19 +116,34 @@ export default function TarotServices() {
                 ))}
               </ul>
 
-              {/* CTA Button */}
-              <button
-                className={`w-full py-3 rounded-lg font-semibold transition ${
-                  pkg.popular
-                    ? "bg-secondary text-secondary-foreground hover:opacity-90"
-                    : "bg-primary text-primary-foreground hover:opacity-90"
-                }`}
-              >
-                Agendar Consulta
-              </button>
+              {/* CTA removed from individual cards - use the single CTA below */}
             </div>
           </div>
         ))}
+      </div>
+
+      {/* CTA único: aparece abaixo dos preços */}
+      <div className="text-center mt-6">
+        <button
+          disabled={!selectedPackage}
+          onClick={() => {
+            const pkg = packages.find((p) => p.id === selectedPackage)
+            if (pkg) {
+              // Aqui você pode abrir modal, redirecionar para checkout, abrir formulário, etc.
+              // Por enquanto mostra um alerta simples.
+              alert(`Agendando: ${pkg.name} — ${pkg.price}`)
+            }
+          }}
+          className={`mx-auto px-6 py-3 rounded-lg font-semibold transition ${
+            selectedPackage
+              ? 'bg-green-500 text-white hover:opacity-90'
+              : 'bg-muted text-muted-foreground cursor-not-allowed opacity-60'
+          }`}
+        >
+          {selectedPackage
+            ? `Agendar ${selectedPkg?.name} — ${selectedPkg?.price}`
+            : 'Escolha um pacote'}
+        </button>
       </div>
 
       {/* About Section */}

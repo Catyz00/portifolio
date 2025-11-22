@@ -3,6 +3,116 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Github, Linkedin, Instagram } from 'lucide-react';
 
+function AnimatedProfile() {
+  const lines = [
+    '  nome: "Catarina Dalsan",',
+    '  idade: 23,',
+    '  local: "São Paulo - SP",',
+    '  area: "Front-End",',
+  ];
+
+  const [visibleCount, setVisibleCount] = useState(0);
+  const [highlightIndex, setHighlightIndex] = useState<number | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const timersRef = useRef<number[]>([]);
+  const animatingRef = useRef(false);
+
+  useEffect(() => {
+    // respect reduced motion
+    if (
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      setVisibleCount(lines.length);
+      return;
+    }
+
+    const el = containerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            // When entering: clear any pending timers and start the pulse sequence
+            timersRef.current.forEach((id) => clearTimeout(id));
+            timersRef.current = [];
+            animatingRef.current = true;
+
+            // Reveal lines
+            setVisibleCount(lines.length);
+
+            // Run highlight pulse sequence for each line
+            lines.forEach((_, idx) => {
+              const onDelay = idx * 300 + 100;
+              const offDelay = onDelay + 300;
+
+              const tOn = window.setTimeout(
+                () => setHighlightIndex(idx),
+                onDelay,
+              );
+              timersRef.current.push(tOn);
+
+              const tOff = window.setTimeout(
+                () => setHighlightIndex(null),
+                offDelay,
+              );
+              timersRef.current.push(tOff);
+            });
+
+            // Mark animation as finished after sequence completes so it can run again later
+            const finish = window.setTimeout(() => {
+              animatingRef.current = false;
+            }, lines.length * 300 + 400);
+            timersRef.current.push(finish);
+          } else {
+            // When leaving: clear timers and hide the lines
+            timersRef.current.forEach((id) => clearTimeout(id));
+            timersRef.current = [];
+            setHighlightIndex(null);
+            setVisibleCount(0);
+            animatingRef.current = false;
+          }
+        }
+      },
+      { threshold: 0.2 },
+    );
+
+    observer.observe(el);
+
+    return () => {
+      observer.disconnect();
+      timersRef.current.forEach((id) => clearTimeout(id));
+      timersRef.current = [];
+    };
+  }, []);
+
+  return (
+    <div ref={containerRef} className="ml-4 mt-2 space-y-2">
+      {lines.map((line, idx) => (
+        <div
+          key={idx}
+          className={`flex items-baseline gap-2 transition-colors duration-300 ${
+            highlightIndex === idx ? 'bg-white/5 rounded px-2 py-0.5' : ''
+          }`}
+        >
+          <span
+            className={`text-sm font-mono text-white/90 block w-full overflow-hidden whitespace-pre`}
+            style={{
+              opacity: idx < visibleCount ? 1 : 0,
+              transform: idx < visibleCount ? 'none' : 'translateY(6px)',
+              transition: 'opacity 300ms, transform 300ms',
+            }}
+          >
+            {line}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function AboutSection() {
   // Typing effect for the "<!-- sobre mim -->" heading
   const headingText = '<!-- sobre mim -->';
@@ -83,31 +193,27 @@ export default function AboutSection() {
               </span>
             </h2>
             <p className="text-lg text-foreground/80 leading-relaxed">
-              Sou desenvolvedora web apaixonada por criar experiências digitais
-              incríveis. Com 1 ano de experiência em desenvolvimento web como
-              estagiária, especializo-me em React, Next.js e tecnologias
-              modernas.
+              Sou desenvolvedora web apaixonada por criar experiências digitais,
+              com 1 ano de experiência como estagiária e foco em React, Next.js
+              e tecnologias modernas.
               <br />
               <br />
-              Minha trajetória começou em 2022, quando decidi mergulhar nos
-              estudos de web design com cursos online. Desde então, comecei a me
-              interessar cada vez mais pela área de desenvolvimento front-end, o
-              que me levou a buscar uma formação mais sólida.
+              Minha jornada começou em 2022, estudando web design em cursos
+              online, o que despertou meu interesse pelo desenvolvimento
+              front-end e me levou a buscar uma formação mais sólida.
               <br />
               <br />
-              Em 2023, ingressei no curso de Análise e Desenvolvimento de
-              Sistemas, onde aprofundei meus conhecimentos e habilidades
-              técnicas. No ano seguinte eu consegui meu primeiro estágio como
-              desenvolvedora web, onde tive a oportunidade de aplicar meus
-              conhecimentos em projetos reais e colaborar com equipes
-              talentosas. Essa experiência me permitiu crescer profissionalmente
-              e consolidar minha paixão pelo desenvolvimento front-end.
+              Em 2023, entrei no curso de Análise e Desenvolvimento de Sistemas
+              e, no ano seguinte, conquistei meu primeiro estágio, onde pude
+              aplicar meus conhecimentos em projetos reais e colaborar com
+              equipes talentosas. Essa vivência fortaleceu minhas habilidades e
+              confirmou minha paixão pelo front-end.
               <br />
               <br />
-              Fora do trabalho, sou amante dos animais, adoro viajar e explorar
-              novas culturas e músicas. Nas horas vagas, eu adoro jogar video
-              game e praticar atividades ao ar livre, como trilhas e passeios de
-              bicicleta.
+              Além da área tech, sou amante dos animais, gosto de viajar,
+              conhecer novas culturas e músicas. No meu tempo livre, costumo
+              jogar videogame e praticar atividades ao ar livre, como trilhas e
+              passeios de bicicleta.
             </p>
           </div>
 
@@ -167,34 +273,22 @@ export default function AboutSection() {
             {/* Visual code-like array (static) - titles are H1 and infos are p */}
             <div className="flex justify-center">
               <div>
-                <div className="bg-[#0f1724] border border-[#2b2f3a] rounded-lg p-4 font-mono text-sm text-white w-68 h-68 overflow-auto">
-                  <pre className="mt-3 whitespace-pre-wrap">
+                {/* Programmatic animated code block */}
+                <div
+                  ref={(el) => {
+                    // keep ref on the outer container for IntersectionObserver
+                    // (the actual observer is managed below)
+                    void el;
+                  }}
+                  className="bg-[#0f1724] border border-[#2b2f3a] rounded-lg p-4 font-mono text-sm text-white w-68 h-68 overflow-auto"
+                >
+                  <pre className="mt-3 whitespace-pre-wrap text-[#7ee787]">
                     const perfil = [
                   </pre>
 
-                  <div className="ml-4 mt-2 space-y-2">
-                    <div className="flex items-baseline gap-3">
-                      <h1 className="text-base font-bold text-white">nome</h1>
-                      <p className="text-white">: "Catarina Dalsan",</p>
-                    </div>
+                  <AnimatedProfile />
 
-                    <div className="flex items-baseline gap-3">
-                      <h1 className="text-base font-bold text-white">idade</h1>
-                      <p className="text-white">: 23,</p>
-                    </div>
-
-                    <div className="flex items-baseline gap-3">
-                      <h1 className="text-base font-bold text-white">local</h1>
-                      <p className="text-white">: "São Paulo - SP",</p>
-                    </div>
-
-                    <div className="flex items-baseline gap-3">
-                      <h1 className="text-base font-bold text-white">area</h1>
-                      <p className="text-white">: "Front-End",</p>
-                    </div>
-                  </div>
-
-                  <pre className="mt-3">];</pre>
+                  <pre className="mt-3 text-[#7ee787]">];</pre>
                 </div>
               </div>
             </div>

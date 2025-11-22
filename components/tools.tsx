@@ -25,7 +25,7 @@ const SkillsComponent: React.FC = () => {
       name: 'TypeScript',
       icon: <Code2 className="w-6 h-6" />,
       level: 'avancado',
-      percentage: levelConfig.avancado.percentage,
+      percentage: levelConfig.basico.percentage,
       color: 'bg-blue-500',
     },
     {

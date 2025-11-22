@@ -1,7 +1,5 @@
 'use client';
 
-import type React from 'react';
-
 import { useState } from 'react';
 import { Mail, Phone, Send } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -14,25 +12,19 @@ export default function ContactForm() {
     message: '',
   });
   const [submitted, setSubmitted] = useState(false);
-  const [errors, setErrors] = useState<{
-    name?: string;
-    email?: string;
-    message?: string;
-  }>({});
+  const [errors, setErrors] = useState({});
   const { toast } = useToast();
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     setErrors((prev) => ({ ...prev, [name]: undefined }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const newErrors: { name?: string; email?: string; message?: string } = {};
+    const newErrors = {};
     if (!formData.name?.trim()) newErrors.name = 'Nome é obrigatório.';
     if (!formData.email?.trim()) newErrors.email = 'Email é obrigatório.';
     if (!formData.message?.trim())

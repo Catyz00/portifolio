@@ -12,9 +12,9 @@ function AnimatedProfile() {
   ];
 
   const [visibleCount, setVisibleCount] = useState(0);
-  const [highlightIndex, setHighlightIndex] = useState<number | null>(null);
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const timersRef = useRef<number[]>([]);
+  const [highlightIndex, setHighlightIndex] = useState(null);
+  const containerRef = useRef(null);
+  const timersRef = useRef([]);
   const animatingRef = useRef(false);
 
   useEffect(() => {
@@ -117,8 +117,8 @@ export default function AboutSection() {
   // Typing effect for the "<!-- sobre mim -->" heading
   const headingText = '<!-- sobre mim -->';
   const [typed, setTyped] = useState('');
-  const headingRef = useRef<HTMLElement | null>(null);
-  const typingRef = useRef<number | null>(null);
+  const headingRef = useRef(null);
+  const typingRef = useRef(null);
   const isAnimatingRef = useRef(false);
 
   useEffect(() => {

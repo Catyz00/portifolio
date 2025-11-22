@@ -1,6 +1,5 @@
 'use client';
 
-import type React from 'react';
 import { Inconsolata } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { useEffect, useState } from 'react';
@@ -13,11 +12,7 @@ const inconsolata = Inconsolata({
   variable: '--font-inconsolata',
 });
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }) {
   const [isDark, setIsDark] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);

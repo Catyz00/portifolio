@@ -3,16 +3,7 @@
 import { useState, useRef } from 'react';
 import { ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 
-interface Project {
-  id: number;
-  title: string;
-  description: string;
-  image: string;
-  link: string;
-  technologies: string[];
-}
-
-const projects: Project[] = [
+const projects = [
   {
     id: 1,
     title: 'WebSite seguradora Prime Secure',
@@ -44,7 +35,7 @@ const projects: Project[] = [
 
 export default function ProjectCarousel() {
   const [current, setCurrent] = useState(0);
-  const touchStartX = useRef<number | null>(null);
+  const touchStartX = useRef(null);
 
   const next = () => {
     setCurrent((prev) => (prev + 1) % projects.length);

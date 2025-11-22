@@ -11,26 +11,16 @@ import {
   StepBackIcon,
 } from 'lucide-react';
 
-type SkillLevel = 'basico' | 'medio' | 'avancado';
-
-interface Skill {
-  name: string;
-  icon: React.ReactNode;
-  level: SkillLevel;
-  percentage: number;
-  color: string;
-}
-
-const levelConfig: Record<SkillLevel, { label: string; percentage: number }> = {
+const levelConfig = {
   basico: { label: 'Básico', percentage: 40 },
   medio: { label: 'Médio', percentage: 70 },
   avancado: { label: 'Avançado', percentage: 95 },
 };
 
-const SkillsComponent: React.FC = () => {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+const SkillsComponent = () => {
+  const [hoveredIndex, setHoveredIndex] = useState(null);
 
-  const skills: Skill[] = [
+  const skills = [
     {
       name: 'TypeScript',
       icon: <Code2 className="w-6 h-6" />,

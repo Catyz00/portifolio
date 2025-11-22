@@ -6,7 +6,7 @@ import TarotServices from '@/components/tarot-services';
 import WebDesignServices from '@/components/web-design-services';
 
 export default function ServicesPage() {
-  const activeTab: 'tarot' | 'webdesign' = 'webdesign';
+  const activeTab = 'webdesign';
 
   return (
     <div className="space-y-12 py-12">

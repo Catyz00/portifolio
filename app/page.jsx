@@ -6,34 +6,34 @@ import ContactForm from '@/components/contact-form';
 import ToolsGrid from '@/components/tools';
 
 export default function Home() {
-  const heroRef = useRef<HTMLDivElement | null>(null);
+  const heroRef = useRef(null);
   const [heroVisible, setHeroVisible] = useState(false);
 
   // Always type the plain name in the correct order
   // Include angle brackets and closing slash so they are typed too
   const fullTitle = '<CatarinaRibeiro/>';
   const [typedText, setTypedText] = useState('');
-  const typingRef = useRef<number | null>(null);
+  const typingRef = useRef(null);
 
   // Typing effect for the "<!-- projetos em destaque -->" heading
   const projectsFull = '<!-- projetos em destaque -->';
   const [projectsTyped, setProjectsTyped] = useState('');
-  const projectsTypingRef = useRef<number | null>(null);
-  const projectsHeadingRef = useRef<HTMLHeadingElement | null>(null);
+  const projectsTypingRef = useRef(null);
+  const projectsHeadingRef = useRef(null);
   const projectsAnimatingRef = useRef(false);
 
   // Typing effect for the "<!-- ferramentas e linguagens -->" heading
   const toolsFull = '<!-- ferramentas e linguagens -->';
   const [toolsTyped, setToolsTyped] = useState('');
-  const toolsTypingRef = useRef<number | null>(null);
-  const toolsHeadingRef = useRef<HTMLHeadingElement | null>(null);
+  const toolsTypingRef = useRef(null);
+  const toolsHeadingRef = useRef(null);
   const toolsAnimatingRef = useRef(false);
 
   // Typing effect for the "<!-- entre em contato -->" heading
   const contactFull = '<!-- entre em contato -->';
   const [contactTyped, setContactTyped] = useState('');
-  const contactTypingRef = useRef<number | null>(null);
-  const contactHeadingRef = useRef<HTMLHeadingElement | null>(null);
+  const contactTypingRef = useRef(null);
+  const contactHeadingRef = useRef(null);
   const contactAnimatingRef = useRef(false);
 
   useEffect(() => {

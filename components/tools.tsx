@@ -1,5 +1,15 @@
 import React, { useState } from 'react';
-import { Code2, FileCode, Palette, Layout, Layers, Bell } from 'lucide-react';
+import {
+  Code2,
+  FileCode,
+  Palette,
+  Layout,
+  Layers,
+  Bell,
+  GitBranch,
+  GithubIcon,
+  StepBackIcon,
+} from 'lucide-react';
 
 type SkillLevel = 'basico' | 'medio' | 'avancado';
 
@@ -64,11 +74,39 @@ const SkillsComponent: React.FC = () => {
       color: 'bg-pink-500',
     },
     {
+      name: 'Git',
+      icon: <GitBranch className="w-6 h-6" />,
+      level: 'avancado',
+      percentage: levelConfig.avancado.percentage,
+      color: 'bg-green-600',
+    },
+    {
+      name: 'GitHub',
+      icon: <GithubIcon className="w-6 h-6" />,
+      level: 'avancado',
+      percentage: levelConfig.avancado.percentage,
+      color: 'bg-gray-800',
+    },
+    {
+      name: 'HTML',
+      //   icon: <Html className="w-6 h-6" />,
+      level: 'avancado',
+      percentage: levelConfig.avancado.percentage,
+      color: 'bg-orange-500',
+    },
+    {
       name: 'Tailwind CSS',
       icon: <Palette className="w-6 h-6" />,
       level: 'avancado',
       percentage: levelConfig.avancado.percentage,
       color: 'bg-teal-500',
+    },
+    {
+      name: 'Redux',
+      icon: <StepBackIcon className="w-6 h-6" />,
+      level: 'medio',
+      percentage: levelConfig.medio.percentage,
+      color: 'bg-indigo-500',
     },
   ];
 

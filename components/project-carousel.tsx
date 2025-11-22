@@ -54,51 +54,63 @@ export default function ProjectCarousel() {
 
   return (
     <div className="space-y-6">
-      <div className="relative rounded-2xl overflow-hidden bg-card border border-border shadow-lg">
-        {/* Image */}
-        <div className="relative h-96 md:h-[500px] overflow-hidden bg-muted">
-          <img src={project.image || "/placeholder.svg"} alt={project.title} className="w-full h-full object-cover" />
-        </div>
-
-        {/* Content */}
-        <div className="p-8">
-          <div className="flex items-start justify-between mb-4">
-            <div>
-              <h3 className="text-3xl font-bold text-primary mb-2">{project.title}</h3>
-              <p className="text-foreground/80 text-lg">{project.description}</p>
-            </div>
-            <a
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 bg-secondary text-secondary-foreground rounded-lg hover:opacity-90 transition flex-shrink-0 ml-4"
-            >
-              <span>Visualizar</span>
-              <ExternalLink size={18} />
-            </a>
-          </div>
-
-          {/* Technologies */}
-          <div className="flex flex-wrap gap-2 mb-6">
-            {project.technologies.map((tech) => (
-              <span key={tech} className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">
-                {tech}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Navigation */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-center relative">
+        {/* Left button placed outside the card (hidden on small screens) */}
         <button
           onClick={prev}
-          className="p-3 rounded-full bg-primary text-primary-foreground hover:opacity-90 transition"
+          className="hidden md:inline-flex items-center justify-center p-3 rounded-full bg-primary text-primary-foreground hover:opacity-90 transition z-20 mr-4"
           aria-label="Previous project"
         >
           <ChevronLeft size={24} />
         </button>
 
+        <div className="rounded-2xl overflow-hidden bg-card border border-border shadow-lg max-w-4xl w-full">
+          {/* Image */}
+          <div className="relative h-96 md:h-[500px] overflow-hidden bg-muted">
+            <img src={project.image || "/placeholder.svg"} alt={project.title} className="w-full h-full object-cover" />
+          </div>
+
+          {/* Content */}
+          <div className="p-8">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <h3 className="text-3xl font-bold text-primary mb-2">{project.title}</h3>
+                <p className="text-foreground/80 text-lg">{project.description}</p>
+              </div>
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2 bg-secondary text-secondary-foreground rounded-lg hover:opacity-90 transition flex-shrink-0 ml-4"
+              >
+                <span>Visualizar</span>
+                <ExternalLink size={18} />
+              </a>
+            </div>
+
+            {/* Technologies */}
+            <div className="flex flex-wrap gap-2 mb-6">
+              {project.technologies.map((tech) => (
+                <span key={tech} className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Right button placed outside the card (hidden on small screens) */}
+        <button
+          onClick={next}
+          className="hidden md:inline-flex items-center justify-center p-3 rounded-full bg-primary text-primary-foreground hover:opacity-90 transition z-20 ml-4"
+          aria-label="Next project"
+        >
+          <ChevronRight size={24} />
+        </button>
+      </div>
+
+      {/* Navigation (dots only) */}
+      <div className="flex items-center justify-center">
         <div className="flex gap-2">
           {projects.map((_, index) => (
             <button
@@ -109,14 +121,6 @@ export default function ProjectCarousel() {
             />
           ))}
         </div>
-
-        <button
-          onClick={next}
-          className="p-3 rounded-full bg-primary text-primary-foreground hover:opacity-90 transition"
-          aria-label="Next project"
-        >
-          <ChevronRight size={24} />
-        </button>
       </div>
 
       {/* Counter */}

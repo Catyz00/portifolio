@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Check, Code, Palette, Smartphone } from "lucide-react"
+import { Check, Code, Palette, Smartphone, CheckCircle2 } from "lucide-react"
 
 export default function WebDesignServices() {
   const [selectedService, setSelectedService] = useState<string | null>(null)
@@ -19,24 +19,7 @@ export default function WebDesignServices() {
         "Formulário de contato",
         "Analytics integrado",
         "Até 5 revisões",
-        "Suporte por 30 dias",
       ],
-    },
-    {
-      id: "ecommerce",
-      name: "E-commerce",
-      price: "A partir de R$ 5.000",
-      icon: Code,
-      description: "Loja online completa e funcional",
-      details: [
-        "Catálogo de produtos",
-        "Carrinho de compras",
-        "Integração com pagamento",
-        "Gestão de pedidos",
-        "Área administrativa",
-        "Suporte por 60 dias",
-      ],
-      popular: true,
     },
     {
       id: "corporate",
@@ -50,8 +33,8 @@ export default function WebDesignServices() {
         "Portfolio de trabalhos",
         "Seção de serviços",
         "Otimização de performance",
-        "Suporte por 90 dias",
       ],
+      popular: true,
     },
     {
       id: "app",
@@ -63,12 +46,26 @@ export default function WebDesignServices() {
         "Funcionalidades avançadas",
         "Banco de dados",
         "Sistema de usuários",
-        "API personalizada",
         "Dashboard administrativo",
-        "Suporte contínuo",
       ],
     },
   ]
+
+  const selectedSvc = services.find((s) => s.id === selectedService)
+
+  // Número de WhatsApp usado no formulário de contato
+  const WHATSAPP_NUMBER = "5511994505049"
+
+  const getWhatsAppUrl = (svc: { name: string; price: string }) => {
+    const text = `Olá! Gostaria de solicitar orçamento para ${svc.name} (${svc.price}).`
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`
+  }
+
+  const handleRequest = () => {
+    if (!selectedSvc) return
+    const url = getWhatsAppUrl(selectedSvc as { name: string; price: string })
+    window.open(url, "_blank")
+  }
 
   return (
     <div className="space-y-12">
@@ -80,18 +77,25 @@ export default function WebDesignServices() {
         </p>
       </div>
 
-      {/* Services Grid */}
-      <div className="grid md:grid-cols-2 gap-8">
+  {/* Services Grid - mostrar 3 cards por linha a partir de telas md */}
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {services.map((service) => {
           const IconComponent = service.icon
           return (
             <div
               key={service.id}
-              className={`rounded-lg border transition cursor-pointer ${
+              className={`rounded-lg border transition cursor-pointer relative ${
                 service.popular ? "border-secondary bg-card shadow-lg" : "border-border bg-card hover:border-primary"
-              } ${selectedService === service.id ? "ring-2 ring-primary" : ""}`}
+              } ${selectedService === service.id ? "ring-2 ring-green-500" : ""}`}
               onClick={() => setSelectedService(service.id)}
             >
+              {selectedService === service.id && (
+                <div className="absolute -top-3 -right-3 z-10">
+                  <div className="bg-green-500 rounded-full p-1 shadow-lg">
+                    <CheckCircle2 size={28} className="text-white" strokeWidth={2.5} />
+                  </div>
+                </div>
+              )}
               {service.popular && (
                 <div className="bg-secondary text-secondary-foreground px-4 py-2 text-center font-semibold text-sm">
                   Mais Procurado
@@ -121,20 +125,26 @@ export default function WebDesignServices() {
                   ))}
                 </ul>
 
-                {/* CTA Button */}
-                <button
-                  className={`w-full py-3 rounded-lg font-semibold transition ${
-                    service.popular
-                      ? "bg-secondary text-secondary-foreground hover:opacity-90"
-                      : "bg-primary text-primary-foreground hover:opacity-90"
-                  }`}
-                >
-                  Solicitar Orçamento
-                </button>
+                {/* CTA por cartão removido - use o botão único abaixo */}
               </div>
             </div>
           )
         })}
+      </div>
+
+      {/* Botão único que abre WhatsApp */}
+      <div className="text-center mt-6">
+        <button
+          disabled={!selectedService}
+          onClick={handleRequest}
+          className={`mx-auto px-6 py-3 rounded-lg font-semibold transition ${
+            selectedService
+              ? 'bg-green-500 text-white hover:opacity-90'
+              : 'bg-muted text-muted-foreground cursor-not-allowed opacity-60'
+          }`}
+        >
+          {selectedService ? `Solicitar ${selectedSvc?.name} — ${selectedSvc?.price}` : 'Escolha um serviço'}
+        </button>
       </div>
 
       {/* Process Section */}
@@ -143,7 +153,7 @@ export default function WebDesignServices() {
           { step: "1", title: "Briefing", desc: "Entendemos seus objetivos" },
           { step: "2", title: "Design", desc: "Criamos o layout ideal" },
           { step: "3", title: "Desenvolvimento", desc: "Construímos seu site" },
-          { step: "4", title: "Entrega", desc: "Lançamos com suporte" },
+          { step: "4", title: "Entrega", desc: "Lançamos com suporte adicional no primeiro mês" },
         ].map((item) => (
           <div key={item.step} className="text-center">
             <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-lg mx-auto mb-3">

@@ -1,9 +1,14 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
+/* Import Inconsolata from Google Fonts and set as default site font */
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@300;400;500;600;700&display=swap');
+
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  --site-font: 'Inconsolata', ui-monospace, SFMono-Regular, Menlo, Monaco,
+    'Roboto Mono', 'Segoe UI Mono', monospace;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -121,5 +126,9 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  html,
+  body {
+    font-family: var(--site-font);
   }
 }

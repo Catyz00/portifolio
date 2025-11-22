@@ -44,13 +44,13 @@ export default function Home() {
 
 {/* Projects Carousel */}
       <section id="projects" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-4xl font-bold text-primary mb-8">Projetos em Destaque</h2>
+        <h2 className="text-4xl font-bold text-primary mb-8 text-center">&lt;!-- projetos em destaque --&gt;</h2>
         <ProjectCarousel />
       </section>
 
       {/* Contact Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-4xl font-bold text-primary mb-8 text-center">Entre em Contato</h2>
+        <h2 className="text-4xl font-bold text-primary mb-8 text-center">&lt;!-- entre em contato --&gt;</h2>
         <ContactForm />
       </section>
     </div>

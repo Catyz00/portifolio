@@ -17,6 +17,27 @@ export default function AboutSection() {
               incríveis. Com 1 ano de experiência em desenvolvimento web como
               estagiária, especializo-me em React, Next.js e tecnologias
               modernas.
+              <br />
+              <br />
+              Minha trajetória começou em 2022, quando decidi mergulhar nos
+              estudos de web design com cursos online. Desde então, comecei a me
+              interessar cada vez mais pela área de desenvolvimento front-end, o
+              que me levou a buscar uma formação mais sólida.
+              <br />
+              <br />
+              Em 2023, ingressei no curso de Análise e Desenvolvimento de
+              Sistemas, onde aprofundei meus conhecimentos e habilidades
+              técnicas. No ano seguinte eu consegui meu primeiro estágio como
+              desenvolvedora web, onde tive a oportunidade de aplicar meus
+              conhecimentos em projetos reais e colaborar com equipes
+              talentosas. Essa experiência me permitiu crescer profissionalmente
+              e consolidar minha paixão pelo desenvolvimento front-end.
+              <br />
+              <br />
+              Fora do trabalho, sou amante dos animais, adoro viajar e explorar
+              novas culturas e músicas. Nas horas vagas, eu adoro jogar video
+              game e praticar atividades ao ar livre, como trilhas e passeios de
+              bicicleta.
             </p>
           </div>
 
@@ -84,8 +105,8 @@ export default function AboutSection() {
 
         {/* Images Grid + visual "array" representation */}
         <div className="space-y-4">
-          <div className="grid grid-cols-2 gap-4 items-start">
-            <div className="rounded-full overflow-hidden bg-muted aspect-square w-52 h-52 mx-auto">
+          <div className="flex flex-col items-center gap-4">
+            <div className="overflow-hidden bg-muted aspect-square w-56 h-56 mx-auto rounded-full">
               <img
                 src="/perfil.jpeg"
                 alt="Profissional"
@@ -94,9 +115,9 @@ export default function AboutSection() {
             </div>
 
             {/* Visual code-like array (static) - titles are H1 and infos are p */}
-            <div className="col-span-2 md:col-span-1">
-              <div className="max-w-md mx-auto">
-                <div className="bg-[#0f1724] border border-[#2b2f3a] rounded-lg p-4 font-mono text-sm text-white">
+            <div className="flex justify-center">
+              <div>
+                <div className="bg-[#0f1724] border border-[#2b2f3a] rounded-lg p-4 font-mono text-sm text-white w-68 h-68 overflow-auto">
                   <pre className="mt-3 whitespace-pre-wrap">
                     const perfil = [
                   </pre>

@@ -50,7 +50,18 @@ export default function RootLayout({
         <div className="flex flex-col min-h-screen">
           <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-              <div className="text-2xl font-bold text-primary">Portfólio</div>
+              <div>
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    window.scrollTo({ top: 0, behavior: "smooth" })
+                  }}
+                  className="text-2xl font-bold text-primary hover:opacity-90"
+                >
+                  @cat.dalsan
+                </a>
+              </div>
 
               <div className="flex items-center gap-6">
                 <a href="/" className="text-foreground hover:text-primary transition">
@@ -59,6 +70,8 @@ export default function RootLayout({
                 <a href="/servicos" className="text-foreground hover:text-primary transition">
                   Serviços
                 </a>
+
+                {/* (CV link moved to hero) */}
 
                 <button
                   onClick={toggleDarkMode}

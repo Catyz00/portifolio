@@ -6,7 +6,7 @@ import { Github, Linkedin, Instagram } from 'lucide-react';
 function AnimatedProfile() {
   const lines = [
     '  nome: "Catarina Dalsan",',
-    '  idade: 23,',
+    '  idade: 22,',
     '  local: "São Paulo - SP",',
     '  area: "Front-End",',
   ];

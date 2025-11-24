@@ -24,7 +24,7 @@ const SkillsComponent = () => {
     {
       name: 'TypeScript',
       icon: <Code2 className="w-6 h-6" />,
-      level: 'avancado',
+      level: 'basico',
       percentage: levelConfig.basico.percentage,
       color: 'bg-blue-500',
     },
@@ -75,7 +75,7 @@ const SkillsComponent = () => {
       icon: <GithubIcon className="w-6 h-6" />,
       level: 'avancado',
       percentage: levelConfig.avancado.percentage,
-      color: 'bg-gray-800',
+      color: 'bg-gray-400',
     },
     {
       name: 'HTML',

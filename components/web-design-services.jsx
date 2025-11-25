@@ -19,6 +19,9 @@ export default function WebDesignServices() {
       name: 'Landing Page',
       price: 'A partir de R$ 1.500',
       icon: Smartphone,
+      image: '/lp-auto.png',
+      // abre WhatsApp
+      link: 'https://www.affinityprime.com.br/seguro-auto-justos',
       description: 'Página otimizada para conversão',
       details: [
         'Design responsivo moderno',
@@ -33,6 +36,9 @@ export default function WebDesignServices() {
       name: 'Site Corporativo',
       price: 'A partir de R$ 3.000',
       icon: Palette,
+      image: '/affinityprime.jpeg',
+      // exemplo: página externa / case
+      link: 'https://www.affinityprime.com.br',
       description: 'Presença profissional online',
       details: [
         'Design personalizado',
@@ -48,6 +54,9 @@ export default function WebDesignServices() {
       name: 'Aplicação Web',
       price: 'A partir de R$ 8.000',
       icon: Code,
+      image: '/primesecure.jpeg',
+      // link externo (card bloqueado) - mantido
+      // link: 'https://www.affinityprime.com.br/seguro-auto-justos',
       description: 'Aplicação robusta e escalável',
       details: [
         'Funcionalidades avançadas',
@@ -93,7 +102,7 @@ export default function WebDesignServices() {
           return (
             <div
               key={service.id}
-              className={`rounded-lg border transition relative ${
+              className={`rounded-lg border transition relative flex flex-col h-full ${
                 service.popular
                   ? 'border-secondary bg-card shadow-lg'
                   : 'border-border bg-card'
@@ -125,13 +134,24 @@ export default function WebDesignServices() {
                   </div>
                 </div>
               )}
-              {service.popular && (
-                <div className="bg-secondary text-secondary-foreground px-4 py-2 text-center font-semibold text-sm">
-                  Mais Procurado
-                </div>
-              )}
 
-              <div className="p-8 space-y-6">
+              {/* Preview image for all services (show for locked too so heights align) */}
+              <div className="w-full overflow-hidden rounded-t-lg relative">
+                <div className="h-40 sm:h-44 w-full">
+                  <img
+                    src={service.image}
+                    alt={`${service.name} preview`}
+                    className="w-full h-full object-cover rounded-t-lg"
+                  />
+                </div>
+                {service.popular && (
+                  <div className="absolute top-2 left-2 z-20 rounded-md bg-green-500 text-secondary-foreground px-3 py-1 text-center font-semibold text-sm">
+                    Mais Procurado
+                  </div>
+                )}
+              </div>
+
+              <div className="p-8 space-y-6 flex-1 flex flex-col">
                 {/* Header */}
                 <div className="flex items-start justify-between gap-4">
                   <div>
@@ -141,7 +161,7 @@ export default function WebDesignServices() {
                     <p className="text-foreground/70">{service.description}</p>
                   </div>
                   <IconComponent
-                    className="text-secondary flex-shrink-0"
+                    className="text-secondary shrink-0"
                     size={32}
                   />
                 </div>
@@ -152,7 +172,7 @@ export default function WebDesignServices() {
                 </div>
 
                 {/* Features */}
-                <ul className="space-y-3">
+                <ul className="space-y-3 flex-1">
                   {service.details.map((detail, idx) => (
                     <li
                       key={idx}
@@ -160,12 +180,40 @@ export default function WebDesignServices() {
                     >
                       <Check
                         size={20}
-                        className="text-secondary mt-0.5 flex-shrink-0"
+                        className="text-secondary mt-0.5 shrink-0"
                       />
                       <span>{detail}</span>
                     </li>
                   ))}
                 </ul>
+
+                {/* Per-card Link Button (abre WhatsApp com mensagem pré-preenchida) */}
+                <div className="pt-4">
+                  {(() => {
+                    const href =
+                      service.link === 'whatsapp'
+                        ? getWhatsAppUrl(service)
+                        : service.link;
+                    return (
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-disabled={isLocked}
+                        className={`inline-block px-4 py-2 rounded-md font-semibold transition ${
+                          isLocked
+                            ? 'bg-muted text-muted-foreground cursor-not-allowed opacity-60'
+                            : 'bg-secondary text-secondary-foreground hover:opacity-90'
+                        }`}
+                        onClick={(e) => {
+                          if (isLocked) e.preventDefault();
+                        }}
+                      >
+                        {isLocked ? 'Em breve' : 'Visualizar Demonstração'}
+                      </a>
+                    );
+                  })()}
+                </div>
 
                 {/* CTA por cartão removido - use o botão único abaixo */}
               </div>

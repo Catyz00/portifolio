@@ -135,14 +135,20 @@ export default function WebDesignServices() {
                 </div>
               )}
 
-              {/* Preview image for all services (show for locked too so heights align) */}
+              {/* Preview area: show image for normal cards, placeholder for locked card */}
               <div className="w-full overflow-hidden rounded-t-lg relative">
                 <div className="h-40 sm:h-44 w-full">
-                  <img
-                    src={service.image}
-                    alt={`${service.name} preview`}
-                    className="w-full h-full object-cover rounded-t-lg"
-                  />
+                  {!isLocked ? (
+                    <img
+                      src={service.image}
+                      alt={`${service.name} preview`}
+                      className="w-full h-full object-cover rounded-t-lg"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-muted/20 flex items-center justify-center rounded-t-lg">
+                      <Lock size={40} className="text-muted-foreground" />
+                    </div>
+                  )}
                 </div>
                 {service.popular && (
                   <div className="absolute top-2 left-2 z-20 rounded-md bg-green-500 text-secondary-foreground px-3 py-1 text-center font-semibold text-sm">

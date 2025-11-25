@@ -279,7 +279,7 @@ export default function Home() {
         {/* Indicador visual pulsante (não interativo) posicionado mais abaixo - closer on small screens */}
         <div
           aria-hidden="true"
-          className="absolute bottom-12 sm:bottom-24 left-1/2 -translate-x-1/2 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary text-secondary-foreground shadow-lg opacity-100 animate-bounce pointer-events-none"
+          className="absolute bottom-28 sm:bottom-28 left-1/2 -translate-x-1/2 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary text-secondary-foreground shadow-lg opacity-100 animate-bounce pointer-events-none"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

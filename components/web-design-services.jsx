@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import {
   Check,
   Code,
@@ -19,6 +19,9 @@ export default function WebDesignServices() {
       name: 'Landing Page',
       price: 'A partir de R$ 1.500',
       icon: Smartphone,
+      image: '/lp-auto.png',
+      // abre WhatsApp
+      link: 'https://www.affinityprime.com.br/seguro-auto-justos',
       description: 'Página otimizada para conversão',
       details: [
         'Design responsivo moderno',
@@ -33,6 +36,9 @@ export default function WebDesignServices() {
       name: 'Site Corporativo',
       price: 'A partir de R$ 3.000',
       icon: Palette,
+      image: '/affinityprime.jpeg',
+      // exemplo: página externa / case
+      link: 'https://www.affinityprime.com.br',
       description: 'Presença profissional online',
       details: [
         'Design personalizado',
@@ -48,6 +54,9 @@ export default function WebDesignServices() {
       name: 'Aplicação Web',
       price: 'A partir de R$ 8.000',
       icon: Code,
+      image: '/primesecure.jpeg',
+      // link externo (card bloqueado) - mantido
+      // link: 'https://www.affinityprime.com.br/seguro-auto-justos',
       description: 'Aplicação robusta e escalável',
       details: [
         'Funcionalidades avançadas',
@@ -74,104 +83,199 @@ export default function WebDesignServices() {
     window.open(url, '_blank');
   };
 
+  // Mobile carousel state & touch handling (same behavior as ProjectCarousel)
+  const [current, setCurrent] = useState(0);
+  const touchStartX = useRef(null);
+
+  const next = () => setCurrent((prev) => (prev + 1) % services.length);
+  const prev = () =>
+    setCurrent((prev) => (prev - 1 + services.length) % services.length);
+
+  // helper to render a single service card (used by mobile carousel and desktop grid)
+  const renderCard = (service) => {
+    const IconComponent = service.icon;
+    const isLocked = service.id === 'app';
+    const href =
+      service.link === 'whatsapp' ? getWhatsAppUrl(service) : service.link;
+
+    return (
+      <div
+        className={`rounded-lg border transition relative flex flex-col h-full ${
+          service.popular
+            ? 'border-secondary bg-card shadow-lg'
+            : 'border-border bg-card'
+        } ${
+          isLocked
+            ? 'opacity-60 cursor-not-allowed'
+            : 'cursor-pointer hover:border-primary'
+        } ${selectedService === service.id ? 'ring-2 ring-green-500' : ''}`}
+        onClick={() => !isLocked && setSelectedService(service.id)}
+        aria-disabled={isLocked}
+      >
+        {isLocked && (
+          <div className="absolute top-3 right-3 z-20">
+            <div className="bg-muted/80 text-foreground rounded-full p-1 shadow">
+              <Lock size={18} />
+            </div>
+          </div>
+        )}
+        {selectedService === service.id && (
+          <div className="absolute -top-3 -right-3 z-10">
+            <div className="bg-green-500 rounded-full p-1 shadow-lg">
+              <CheckCircle2
+                size={28}
+                className="text-white"
+                strokeWidth={2.5}
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Preview area */}
+        <div className="w-full overflow-hidden rounded-t-lg relative">
+          <div className="h-40 sm:h-44 w-full">
+            {!isLocked ? (
+              <img
+                src={service.image}
+                alt={`${service.name} preview`}
+                className="w-full h-full object-cover rounded-t-lg"
+              />
+            ) : (
+              <div className="w-full h-full bg-muted/20 flex items-center justify-center rounded-t-lg">
+                <Lock size={40} className="text-muted-foreground" />
+              </div>
+            )}
+          </div>
+          {service.popular && (
+            <div className="absolute top-2 left-2 z-20 rounded-md bg-green-500 text-secondary-foreground px-3 py-1 text-center font-semibold text-sm">
+              Mais Procurado
+            </div>
+          )}
+        </div>
+
+        <div className="p-8 space-y-6 flex-1 flex flex-col">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <h3 className="text-2xl font-bold text-primary mb-2">
+                {service.name}
+              </h3>
+              <p className="text-foreground/70">{service.description}</p>
+            </div>
+            <IconComponent className="text-secondary shrink-0" size={32} />
+          </div>
+
+          <div className="text-2xl font-bold text-primary">{service.price}</div>
+
+          <ul className="space-y-3 flex-1">
+            {service.details.map((detail, idx) => (
+              <li
+                key={idx}
+                className="flex items-start gap-3 text-foreground/80"
+              >
+                <Check size={20} className="text-secondary mt-0.5 shrink-0" />
+                <span>{detail}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div className="pt-4">
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-disabled={isLocked}
+              className={`inline-block px-4 py-2 rounded-md font-semibold transition ${
+                isLocked
+                  ? 'bg-muted text-muted-foreground cursor-not-allowed opacity-60'
+                  : 'bg-secondary text-secondary-foreground hover:opacity-90'
+              }`}
+              onClick={(e) => {
+                if (isLocked) e.preventDefault();
+              }}
+            >
+              {isLocked ? 'Em breve' : 'Visualizar Demonstração'}
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="space-y-12">
       {/* Hero Section */}
       <div className="text-center space-y-4 py-8">
         <h2 className="text-4xl font-bold text-primary">Desenvolvimento Web</h2>
         <p className="text-xl text-foreground/80 max-w-2xl mx-auto">
-          Criamos sites e aplicações web profissionais que transformam sua
-          presença digital e impulsionam seu negócio.
+          Crio sites e aplicações web profissionais que transformam sua presença
+          digital e impulsionam seu negócio.
         </p>
       </div>
 
       {/* Services Grid - mostrar 3 cards por linha a partir de telas md */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {services.map((service) => {
-          const IconComponent = service.icon;
-          const isLocked = service.id === 'app';
-          return (
-            <div
-              key={service.id}
-              className={`rounded-lg border transition relative ${
-                service.popular
-                  ? 'border-secondary bg-card shadow-lg'
-                  : 'border-border bg-card'
-              } ${
-                isLocked
-                  ? 'opacity-60 cursor-not-allowed'
-                  : 'cursor-pointer hover:border-primary'
-              } ${
-                selectedService === service.id ? 'ring-2 ring-green-500' : ''
-              }`}
-              onClick={() => !isLocked && setSelectedService(service.id)}
-              aria-disabled={isLocked}
-            >
-              {isLocked && (
-                <div className="absolute top-3 right-3 z-20">
-                  <div className="bg-muted/80 text-foreground rounded-full p-1 shadow">
-                    <Lock size={18} />
-                  </div>
-                </div>
-              )}
-              {selectedService === service.id && (
-                <div className="absolute -top-3 -right-3 z-10">
-                  <div className="bg-green-500 rounded-full p-1 shadow-lg">
-                    <CheckCircle2
-                      size={28}
-                      className="text-white"
-                      strokeWidth={2.5}
-                    />
-                  </div>
-                </div>
-              )}
-              {service.popular && (
-                <div className="bg-secondary text-secondary-foreground px-4 py-2 text-center font-semibold text-sm">
-                  Mais Procurado
-                </div>
-              )}
+      {/* Mobile carousel (single-item swipe like Projects..) */}
+      <div
+        className="md:hidden"
+        onTouchStart={(e) => {
+          touchStartX.current = e.touches?.[0]?.clientX ?? null;
+        }}
+        onTouchEnd={(e) => {
+          if (touchStartX.current === null) return;
+          const delta = e.changedTouches?.[0]?.clientX - touchStartX.current;
+          if (delta > 50) prev();
+          else if (delta < -50) next();
+          touchStartX.current = null;
+        }}
+      >
+        <div className="flex items-center justify-center relative">
+          <button
+            onClick={prev}
+            className="absolute left-2 inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary text-primary-foreground hover:opacity-90 transition z-20"
+            aria-label="Previous service"
+          >
+            {/* left chevron - simple char kept */}‹
+          </button>
 
-              <div className="p-8 space-y-6">
-                {/* Header */}
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <h3 className="text-2xl font-bold text-primary mb-2">
-                      {service.name}
-                    </h3>
-                    <p className="text-foreground/70">{service.description}</p>
-                  </div>
-                  <IconComponent
-                    className="text-secondary flex-shrink-0"
-                    size={32}
-                  />
-                </div>
+          <div className="max-w-3xl w-full px-4">
+            {renderCard(services[current])}
+          </div>
 
-                {/* Price */}
-                <div className="text-2xl font-bold text-primary">
-                  {service.price}
-                </div>
+          <button
+            onClick={next}
+            className="absolute right-2 inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary text-primary-foreground hover:opacity-90 transition z-20"
+            aria-label="Next service"
+          >
+            ›
+          </button>
+        </div>
 
-                {/* Features */}
-                <ul className="space-y-3">
-                  {service.details.map((detail, idx) => (
-                    <li
-                      key={idx}
-                      className="flex items-start gap-3 text-foreground/80"
-                    >
-                      <Check
-                        size={20}
-                        className="text-secondary mt-0.5 flex-shrink-0"
-                      />
-                      <span>{detail}</span>
-                    </li>
-                  ))}
-                </ul>
+        {/* dots */}
+        <div className="flex items-center justify-center mt-4">
+          <div className="flex gap-2">
+            {services.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrent(index)}
+                className={`rounded-full transition ${
+                  index === current ? 'bg-primary w-6 h-2' : 'bg-muted w-3 h-3'
+                }`}
+                aria-label={`Go to service ${index + 1}`}
+              />
+            ))}
+          </div>
+        </div>
 
-                {/* CTA por cartão removido - use o botão único abaixo */}
-              </div>
-            </div>
-          );
-        })}
+        {/* counter */}
+        <div className="text-center text-sm text-muted-foreground mt-2">
+          {current + 1} / {services.length}
+        </div>
+      </div>
+
+      {/* Desktop grid */}
+      <div className="hidden md:grid grid-cols-3 gap-8">
+        {services.map((service) => (
+          <div key={service.id}>{renderCard(service)}</div>
+        ))}
       </div>
 
       {/* Botão único que abre WhatsApp */}
@@ -216,7 +320,7 @@ export default function WebDesignServices() {
       {/* Why Choose Us */}
       <div className="bg-card border border-border rounded-lg p-8 space-y-6">
         <h3 className="text-2xl font-bold text-primary">
-          Por que nos escolher?
+          Por que me escolher?
         </h3>
         <div className="grid md:grid-cols-3 gap-8">
           {[
@@ -226,11 +330,11 @@ export default function WebDesignServices() {
             },
             {
               title: 'Tecnologia Moderna',
-              desc: 'Utilizamos as melhores ferramentas e práticas',
+              desc: 'Utilizo as melhores ferramentas e práticas',
             },
             {
               title: 'Suporte no Primeiro mês',
-              desc: 'Estamos aqui para ajudar sempre que precisar',
+              desc: 'Estou aqui para ajudar sempre que precisar',
             },
           ].map((item, idx) => (
             <div key={idx} className="space-y-2">

@@ -213,7 +213,7 @@ export default function WebDesignServices() {
       </div>
 
       {/* Services Grid - mostrar 3 cards por linha a partir de telas md */}
-      {/* Mobile carousel (single-item swipe like Projects) */}
+      {/* Mobile carousel (single-item swipe like Projects..) */}
       <div
         className="md:hidden"
         onTouchStart={(e) => {
